@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>준회원 출석체크 — 제37회 서울남연회</title>
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a;
+  --border: #2e3250; --accent: #4f7cff; --gold: #f0b429;
+  --green: #34d399; --red: #f87171; --text: #e8eaf6;
+  --text2: #9ba3c4; --text3: #6b7399;
+  --jun2: #7b2d9e; --jun1: #0e7f4e; --heoip: #1a4fa0;
+}
+* { box-sizing: border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+body { background:var(--bg); color:var(--text); font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif; font-size:13px; padding-bottom:40px; }
+
+.header { background:#1a1d27; border-bottom:1px solid var(--border); padding:16px; position:sticky; top:0; z-index:100; }
+.header h1 { font-size:16px; font-weight:700; }
+.header-sub { font-size:11px; color:var(--text3); margin-top:3px; }
+
+/* 회집 탭 */
+.session-tabs { display:flex; gap:6px; padding:10px 12px; overflow-x:auto; scrollbar-width:none; background:var(--surface); border-bottom:1px solid var(--border); }
+.session-tabs::-webkit-scrollbar { display:none; }
+.stab { flex-shrink:0; padding:5px 12px; border-radius:16px; font-size:11px; font-weight:700; cursor:pointer; border:1px solid var(--border); color:var(--text3); transition:all 0.2s; }
+.stab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.stab.d2 { border-color:rgba(240,180,41,0.4); }
+.stab.d2.active { background:var(--gold); border-color:var(--gold); }
+
+/* 진행도 */
+.prog-bar { padding:8px 12px; background:var(--surface); display:flex; align-items:center; gap:8px; }
+.prog-track { flex:1; height:4px; background:var(--surface2); border-radius:2px; }
+.prog-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--green)); border-radius:2px; transition:width 0.3s; }
+.prog-text { font-size:11px; color:var(--green); font-weight:700; white-space:nowrap; }
+
+/* 그룹 */
+.container { padding:10px 12px; display:flex; flex-direction:column; gap:6px; }
+
+.group-section { border-radius:12px; overflow:hidden; border:1px solid var(--border); }
+.group-header-btn {
+  display:flex; align-items:center; gap:10px; padding:12px 14px;
+  cursor:pointer; user-select:none; -webkit-user-select:none;
+  transition:background 0.15s;
+}
+.group-header-btn:active { background:rgba(255,255,255,0.03); }
+.group-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.g-jun2 .group-dot { background:var(--jun2); }
+.g-jun1 .group-dot { background:var(--jun1); }
+.g-heoip .group-dot { background:var(--heoip); }
+.group-title { font-size:14px; font-weight:700; flex:1; }
+.g-jun2 .group-title { color:#c084fc; }
+.g-jun1 .group-title { color:#4ade80; }
+.g-heoip .group-title { color:#60a5fa; }
+.group-count { font-size:11px; color:var(--text3); }
+.group-chevron { color:var(--text3); font-size:15px; transition:transform 0.25s; }
+.group-section.open .group-chevron { transform:rotate(180deg); }
+.group-body { display:none; border-top:1px solid var(--border); }
+.group-section.open .group-body { display:block; }
+
+/* 세션 패널 */
+.session-panel { display:none; }
+.session-panel.active { display:block; }
+
+/* 출석 그리드 */
+.attend-grid { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:10px; }
+.attend-item {
+  display:flex; align-items:center; gap:8px; padding:8px 10px;
+  background:var(--surface2); border-radius:8px; cursor:pointer;
+  border:1px solid transparent; transition:all 0.15s;
+}
+.attend-item:active { opacity:0.7; }
+.attend-item.present { background:rgba(52,211,153,0.08); border-color:rgba(52,211,153,0.3); }
+.attend-item.absent { background:rgba(248,113,113,0.08); border-color:rgba(248,113,113,0.3); }
+.attend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; border:2px solid var(--border); transition:all 0.15s; }
+.attend-item.present .attend-dot { background:var(--green); border-color:var(--green); }
+.attend-item.absent .attend-dot { background:var(--red); border-color:var(--red); }
+.attend-info { flex:1; min-width:0; }
+.attend-name { font-size:12px; font-weight:700; color:var(--text); }
+.attend-church { font-size:10px; color:var(--text3); }
+.attend-num { font-size:10px; color:var(--text3); margin-left:auto; }
+
+/* 회집 헤더 */
+.session-header { padding:8px 12px; background:var(--surface2); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.session-label { font-size:11px; font-weight:700; color:var(--text2); }
+.session-stats { font-size:11px; color:var(--green); }
+
+/* 일괄 버튼 */
+.bulk-row { display:flex; gap:6px; padding:8px 10px 4px; }
+.bulk-btn { flex:1; padding:6px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; border:none; transition:all 0.15s; }
+.bulk-btn:active { transform:scale(0.97); }
+.btn-all { background:rgba(52,211,153,0.15); color:var(--green); }
+.btn-clear { background:rgba(248,113,113,0.1); color:var(--text3); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>준회원 출석체크</h1>
+  <div class="header-sub">제37회 서울남연회 · 광림교회 · 담당: 안성민 목사</div>
+</div>
+
+<!-- 회집 탭 -->
+<div class="session-tabs">
+  <div class="stab active" onclick="switchSession('d1s1')">9일 1회집<br><span style="font-size:9px">09:00</span></div>
+  <div class="stab" onclick="switchSession('d1s2')">9일 2회집<br><span style="font-size:9px">14:00</span></div>
+  <div class="stab" onclick="switchSession('d1s3')">9일 저녁<br><span style="font-size:9px">17:30</span></div>
+  <div class="stab d2" onclick="switchSession('d2s1')">10일 1회집<br><span style="font-size:9px">09:30</span></div>
+  <div class="stab d2" onclick="switchSession('d2s2')">10일 2회집<br><span style="font-size:9px">12:00</span></div>
+  <div class="stab d2" onclick="switchSession('d2s3')">10일 안수식<br><span style="font-size:9px">14:30</span></div>
+</div>
+
+<div class="prog-bar">
+  <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+  <div class="prog-text" id="prog-text">0 / 0</div>
+</div>
+
+<div class="container" id="main-container">
+  <!-- JS로 동적 생성 -->
+</div>
+
+<script>
+// ===================== 명단 데이터 =====================
+// 지방회 순서 기준으로 정렬
+const data = {
+  heoip: {
+    label: '허 입',
+    color: '#1a4fa0',
+    textColor: '#60a5fa',
+    members: [
+      // 지방회 순서로 정렬 (HTML 파일 기준)
+      {num:1, name:'오세빛', church:'영등포중앙'},
+      {num:2, name:'오의택', church:'은총'},
+      {num:3, name:'오예문', church:'새광명'},
+      {num:4, name:'박선수', church:'구로동'},
+      {num:5, name:'이호용', church:'숨빛청파'},
+      {num:6, name:'박삼수', church:'생명누리'},
+      {num:7, name:'천다솔', church:'한사랑'},
+      {num:8, name:'최정순', church:'새터'},
+      {num:9, name:'송신영', church:'광림'},
+      {num:10, name:'임재순', church:'광림'},
+      {num:11, name:'조창원', church:'개포'},
+      {num:12, name:'김성훈', church:'강남성은'},
+      {num:13, name:'윤성민', church:'빛'},
+      {num:14, name:'문성환', church:'빛'},
+      {num:15, name:'김승배', church:'수표교'},
+      {num:16, name:'박민희', church:'브니엘'},
+    ]
+  },
+  jun1: {
+    label: '준 1',
+    color: '#0e7f4e',
+    textColor: '#4ade80',
+    members: [
+      {num:1, name:'최정문', church:'대림'},
+      {num:2, name:'박다샘', church:'대림'},
+      {num:3, name:'김재성', church:'영도'},
+      {num:4, name:'지성현', church:'예닮'},
+      {num:5, name:'임동원', church:'베다니'},
+      {num:6, name:'문주훈', church:'염창'},
+      {num:7, name:'이범두', church:'선민'},
+      {num:8, name:'권예찬', church:'화곡동'},
+      {num:9, name:'김형통', church:'한사랑'},
+      {num:10, name:'이주복', church:'한사랑'},
+      {num:11, name:'윤민정', church:'광림'},
+      {num:12, name:'남준혁', church:'광림'},
+      {num:13, name:'김관욱', church:'큰믿음유신'},
+      {num:14, name:'김성한', church:'새노래'},
+      {num:15, name:'강영구', church:'염창'},
+      {num:16, name:'유심원', church:'광림'},
+      {num:17, name:'막먀르수렝', church:'광림'},
+    ]
+  },
+  jun2: {
+    label: '준 2',
+    color: '#7b2d9e',
+    textColor: '#c084fc',
+    members: [
+      {num:1, name:'방건석', church:'영등포중앙'},
+      {num:2, name:'황국진', church:'양남'},
+      {num:3, name:'윤성일', church:'문래동'},
+      {num:4, name:'김목', church:'베다니'},
+      {num:5, name:'김은사', church:'베다니'},
+      {num:6, name:'김광현', church:'오류동'},
+      {num:7, name:'이준영', church:'평안'},
+      {num:8, name:'윤민섭', church:'영흥'},
+      {num:9, name:'김성민', church:'금성'},
+      {num:10, name:'한준구', church:'광림'},
+      {num:11, name:'박지훈', church:'광림'},
+      {num:12, name:'안성은', church:'광복'},
+      {num:13, name:'윤수빈', church:'서울연합'},
+      {num:14, name:'배진', church:'안디옥'},
+      {num:15, name:'박재훈', church:'내삶이예배'},
+      {num:16, name:'한아름', church:'남산'},
+      {num:17, name:'이예은', church:'서초중앙'},
+      {num:18, name:'유혜준', church:'참평안'},
+      {num:19, name:'박하늘', church:'관악'},
+      {num:20, name:'최성겸', church:'큰믿음유신'},
+      {num:21, name:'김진혁', church:'예광'},
+      {num:22, name:'조덕희', church:'강남중앙'},
+      {num:23, name:'김홍기', church:'성현'},
+      {num:24, name:'오미일', church:'좋은샘'},
+      {num:25, name:'김은기', church:'뉴질랜드광림'},
+      {num:26, name:'이다니엘', church:'뉴질랜드광림'},
+    ]
+  }
+};
+
+const sessions = ['d1s1','d1s2','d1s3','d2s1','d2s2','d2s3'];
+const sessionLabels = {
+  d1s1:'4/9 제1회집 (09:00)',
+  d1s2:'4/9 제2회집 (14:00)',
+  d1s3:'4/9 저녁 (17:30)',
+  d2s1:'4/10 제3회집 (09:30)',
+  d2s2:'4/10 사무처리5 (12:00)',
+  d2s3:'4/10 목사안수식 (14:30)',
+};
+
+let currentSession = 'd1s1';
+
+// 상태 저장: attend[session][group][num] = 'present'|'absent'|null
+let attend = {};
+sessions.forEach(s => {
+  attend[s] = {};
+  ['heoip','jun1','jun2'].forEach(g => {
+    attend[s][g] = {};
+  });
+});
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('ny37_attend');
+    if (saved) attend = JSON.parse(saved);
+  } catch(e) {}
+}
+
+function saveState() {
+  try { localStorage.setItem('ny37_attend', JSON.stringify(attend)); } catch(e) {}
+}
+
+function getKey(session, group, num) { return session+'_'+group+'_'+num; }
+
+function toggleAttend(session, group, num) {
+  const cur = attend[session][group][num];
+  if (!cur) attend[session][group][num] = 'present';
+  else if (cur === 'present') attend[session][group][num] = 'absent';
+  else attend[session][group][num] = null;
+  saveState();
+  render();
+}
+
+function bulkSet(session, group, val) {
+  data[group].members.forEach(m => {
+    attend[session][group][m.num] = val;
+  });
+  saveState();
+  render();
+}
+
+function switchSession(s) {
+  currentSession = s;
+  document.querySelectorAll('.stab').forEach((el,i) => {
+    el.classList.toggle('active', sessions[i] === s);
+  });
+  render();
+}
+
+function render() {
+  const s = currentSession;
+  const container = document.getElementById('main-container');
+  container.innerHTML = '';
+
+  let totalPresent = 0, totalAll = 0;
+
+  ['heoip','jun1','jun2'].forEach(gKey => {
+    const g = data[gKey];
+    const members = g.members;
+    const present = members.filter(m => attend[s][gKey][m.num] === 'present').length;
+    const absent = members.filter(m => attend[s][gKey][m.num] === 'absent').length;
+    const checked = present + absent;
+    totalPresent += present;
+    totalAll += members.length;
+
+    const section = document.createElement('div');
+    section.className = 'group-section g-' + gKey;
+    section.innerHTML = `
+      <div class="group-header-btn" onclick="toggleGroup(this)">
+        <div class="group-dot"></div>
+        <div class="group-title">${g.label} (${members.length}명)</div>
+        <div class="group-count">출석 ${present} / 결석 ${absent}</div>
+        <div class="group-chevron">▾</div>
+      </div>
+      <div class="group-body">
+        <div class="session-header">
+          <span class="session-label">${sessionLabels[s]}</span>
+          <span class="session-stats">✓${present} ✗${absent} ?${members.length-checked}</span>
+        </div>
+        <div class="bulk-row">
+          <button class="bulk-btn btn-all" onclick="bulkSet('${s}','${gKey}','present');event.stopPropagation()">전원 출석</button>
+          <button class="bulk-btn btn-clear" onclick="bulkSet('${s}','${gKey}',null);event.stopPropagation()">초기화</button>
+        </div>
+        <div class="attend-grid">
+          ${members.map(m => {
+            const st = attend[s][gKey][m.num] || '';
+            return `<div class="attend-item ${st}" onclick="toggleAttend('${s}','${gKey}',${m.num});event.stopPropagation()">
+              <div class="attend-dot"></div>
+              <div class="attend-info">
+                <div class="attend-name">${m.name}</div>
+                <div class="attend-church">${m.church}</div>
+              </div>
+              <div class="attend-num">${m.num}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    `;
+    container.appendChild(section);
+  });
+
+  // 진행도 업데이트
+  const pct = totalAll ? Math.round(totalPresent/totalAll*100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = '출석 ' + totalPresent + ' / ' + totalAll;
+}
+
+function toggleGroup(btn) {
+  btn.closest('.group-section').classList.toggle('open');
+}
+
+// 초기화
+loadState();
+render();
+
+// 처음엔 허입 그룹 열어두기
+setTimeout(() => {
+  const first = document.querySelector('.group-section');
+  if(first) first.classList.add('open');
+},100);
+</script>
+</body>
+</html>

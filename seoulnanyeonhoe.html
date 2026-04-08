@@ -467,6 +467,7 @@
 <!-- 빠른 이동 바 -->
 <div class="progress-bar">
   <div class="prog-item day1" onclick="scrollTo('#staff')"><div class="prog-dot"></div><div class="prog-label">스텝</div></div>
+  <div class="prog-item day1" onclick="scrollTo('#envelope')"><div class="prog-dot"></div><div class="prog-label">💌봉투</div></div>
   <div class="prog-item day1" onclick="scrollTo('#prep')"><div class="prog-dot"></div><div class="prog-label">사전준비</div></div>
   <div class="prog-item day1" onclick="scrollTo('#worship1')"><div class="prog-dot"></div><div class="prog-label">개회예배</div></div>
   <div class="prog-item day1" onclick="scrollTo('#sacrament')"><div class="prog-dot"></div><div class="prog-label">성찬식</div></div>
@@ -522,7 +523,7 @@
       </div>
       <div class="staff-card">
         <div class="staff-name">전남욱 목사</div>
-        <div class="staff-role">실동 스텝<br>감독기 기수<br>안수식 성경책 전달</div>
+        <div class="staff-role">실동 스텝<br>감독기 기수<br>안수식 성경책 전달<br>💌 봉투 담당 (사모합창단·외부내빈·총무 전체 카운트)</div>
         <div class="staff-note ok">입장 후 현장 투입</div>
       </div>
       <div class="staff-card">
@@ -538,11 +539,85 @@
   </div>
 </div>
 
+<!-- 봉투 체크리스트 -->
+<div id="envelope" class="section warn" onclick="toggle(this)">
+  <div class="section-header">
+    <div class="section-icon">💌</div>
+    <div class="section-title-wrap">
+      <div class="section-title">봉투 전달 체크리스트</div>
+      <div class="section-meta">담당: 전남욱 목사 · 전달 후 체크</div>
+    </div>
+    <div class="section-right">
+      <span class="check-badge warn" id="badge-env">0/0</span>
+      <div class="section-chevron">▾</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="alert gold">
+      <span class="alert-icon">💌</span>
+      <span>전달 즉시 체크 — 미전달 항목은 빨간색으로 남음</span>
+    </div>
+
+    <div class="sub-title">🎵 특송 / 연주 팀</div>
+    <div class="checklist" id="cl-env">
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">서울남연회 장로찬양단 대표<br><span style="font-size:11px;color:var(--text3)">개회예배 찬양 | DAY 1</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">고우석 성도 (국립국악원)<br><span style="font-size:11px;color:var(--text3)">개회예배 봉헌특주 | DAY 1</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">유명한 집사 (오류동교회)<br><span style="font-size:11px;color:var(--text3)">은퇴찬하예배 색소폰 연주 | DAY 2</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">서울남연회 목사중창단 대표<br><span style="font-size:11px;color:var(--text3)">은퇴찬하예배 특별찬양 | DAY 2</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">서울남연회 사모합창단 대표<br><span style="font-size:11px;color:var(--text3)">목사안수예배 특별찬양 | DAY 2</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">여선교회 서울남연회연합회 임원 대표<br><span style="font-size:11px;color:var(--text3)">안수예배 봉헌특송 | DAY 2</span></div></div>
+    </div>
+
+    <div class="sub-title">📝 추가 대상 (이름 입력)</div>
+    <div class="checklist" id="cl-env-extra">
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text" contenteditable="true" onclick="event.stopPropagation()" style="outline:none;min-width:80px;color:var(--text)">이름 입력</div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text" contenteditable="true" onclick="event.stopPropagation()" style="outline:none;min-width:80px;color:var(--text)">이름 입력</div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text" contenteditable="true" onclick="event.stopPropagation()" style="outline:none;min-width:80px;color:var(--text)">이름 입력</div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text" contenteditable="true" onclick="event.stopPropagation()" style="outline:none;min-width:80px;color:var(--text)">이름 입력</div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text" contenteditable="true" onclick="event.stopPropagation()" style="outline:none;min-width:80px;color:var(--text)">이름 입력</div></div>
+    </div>
+
+    <div class="sub-title">🎓 내빈 대학 총장</div>
+    <div class="checklist">
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">감신대 총장 유경동 박사<br><span style="font-size:11px;color:var(--text3)">15:00~15:30 도착 | DAY 1</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">목원대 총장 이희학 박사<br><span style="font-size:11px;color:var(--text3)">15:00~15:30 도착 | DAY 1</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">협성대 총장<br><span style="font-size:11px;color:var(--text3)">15:00~15:30 도착 | DAY 1</span></div></div>
+    </div>
+
+    <div class="sub-title">🏢 감리회 본부 각국 총무</div>
+    <div class="checklist">
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">선교국 총무 황병배 목사<br><span style="font-size:11px;color:var(--text3)">13:30 도착 | DAY 2</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">교육국 총무 김두범 목사<br><span style="font-size:11px;color:var(--text3)">13:30 도착 | DAY 2</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">사회평신도국 총무 문영배 장로<br><span style="font-size:11px;color:var(--text3)">13:30 도착 | DAY 2</span></div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">사무국 총무 문영환 목사<br><span style="font-size:11px;color:var(--text3)">13:30 도착 | DAY 2</span></div></div>
+    </div>
+
+    <div class="alert red" style="margin-top:10px">
+      <span class="alert-icon">⚠️</span>
+      <span>추가 대상자 있으면 총괄(이준구 목사)에게 즉시 보고</span>
+    </div>
+  </div>
+</div>
+
 <!-- DAY 1 구분 -->
 <div class="day-divider">
   <div class="day-divider-line"></div>
   <div class="day-divider-label d1">📅 DAY 1 — 4월 9일(목)</div>
   <div class="day-divider-line"></div>
+</div>
+
+<!-- ★ 제1차 회집 구분 -->
+<div style="background:linear-gradient(135deg,rgba(79,124,255,0.15),rgba(79,124,255,0.05));border:1px solid rgba(79,124,255,0.4);border-radius:12px;padding:12px 14px;margin:4px 0;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+    <div>
+      <div style="font-size:15px;font-weight:800;color:var(--accent);letter-spacing:1px;">제 1 차 회 집</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">4월 9일(목) 오전 10:00 ~ 오후 12:40</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end;">
+      <div style="font-size:10px;background:rgba(79,124,255,0.15);color:var(--accent);padding:2px 8px;border-radius:10px;border:1px solid rgba(79,124,255,0.3);">개회예배·성찬식 → p.3~13</div>
+      <div style="font-size:10px;background:rgba(79,124,255,0.15);color:var(--accent);padding:2px 8px;border-radius:10px;border:1px solid rgba(79,124,255,0.3);">사무처리1 → p.16 / 사무처리2 → p.19</div>
+    </div>
+  </div>
 </div>
 
 <!-- 기수 확인 -->
@@ -573,7 +648,7 @@
       <div class="flow-item"><div class="flow-dot active">1</div><div class="flow-content"><div class="flow-title">연회기 (김재풍 목사)</div></div></div>
       <div class="flow-item"><div class="flow-dot active">2</div><div class="flow-content"><div class="flow-title">감독기 (전남욱 목사)</div></div></div>
       <div class="flow-item"><div class="flow-dot active">3</div><div class="flow-content"><div class="flow-title">각 지방회기</div></div></div>
-      <div class="flow-item"><div class="flow-dot active">4</div><div class="flow-content"><div class="flow-title">유병용·김충식·한정석·임영훈·도준순·최현규·채성기 감독</div><div class="flow-desc">이연덕·이옥진 장로 (총 9명 강단 등단)</div></div></div>
+      <div class="flow-item"><div class="flow-dot active">4</div><div class="flow-content"><div class="flow-title">유병용·한정석·임영훈·도준순·최현규·채성기 감독 + 이연덕·이옥진 장로</div><div class="flow-desc">⚠️ 김충식 감독 불참 / 강단 등단 총 8명</div></div></div>
       <div class="flow-item"><div class="flow-dot active">5</div><div class="flow-content"><div class="flow-title">홍영헌 감리사 이하 16명</div></div></div>
       <div class="flow-item"><div class="flow-dot">6</div><div class="flow-content"><div class="flow-title">최순원 목사·지성은 관리자</div></div></div>
     </div>
@@ -605,7 +680,8 @@
       <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">표창패 강대 왼쪽/성가대석 오른쪽 수량·순서 배치 (장호성 장로 제외 확인)</div></div>
       <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">장호성 장로 1일차 제외 — 총무·서기 최종 공지</div></div>
       <div class="check-item" onclick="chk(this)"><div class="check-box"></div><div class="check-text">한준구 전도사 어머님 안수 중 서계심 — 스텝 전체 공유</div></div>
-      <div class="check-item" onclick="chk(this)"><div class="check-box"></div><div class="check-text">스텝 전체 포지션 최종 확인</div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">스텝 전체 포지션 최종 확인</div></div>
+      <div class="check-item urgent" onclick="chk(this)"><div class="check-box"></div><div class="check-text">💌 전남욱 목사 봉투 준비 — 사모합창단·외부내빈·총무 수량 전체 카운트 완료</div></div>
     </div>
   </div>
 </div>
@@ -616,7 +692,7 @@
     <div class="section-icon">🟠</div>
     <div class="section-title-wrap">
       <div class="section-title">개회 예배 준비</div>
-      <div class="section-meta">09:00~10:00</div>
+      <div class="section-meta">09:00~10:00 · 매뉴얼 p.3</div>
     </div>
     <div class="section-right"><div class="section-chevron">▾</div></div>
   </div>
@@ -640,7 +716,7 @@
     <div class="section-icon">🍞</div>
     <div class="section-title-wrap">
       <div class="section-title">개회 예배 및 성찬식</div>
-      <div class="section-meta">10:00~11:20 · 동선 집중</div>
+      <div class="section-meta">10:00~11:20 · 매뉴얼 p.4~13 · 동선 집중</div>
     </div>
     <div class="section-right"><div class="section-chevron">▾</div></div>
   </div>
@@ -649,15 +725,205 @@
       <span class="alert-icon">⚠️</span>
       <span>감독 자리 이름표 이준구 목사 직접 확인 필수</span>
     </div>
-    <div class="sub-title">성찬식 분급 동선</div>
+
+    <div class="sub-title">강대상 의자 순서 (설교단 오른쪽부터)</div>
+    <div class="alert blue">
+      <span class="alert-icon">🪑</span>
+      <div>
+        <div style="font-size:12px;margin-bottom:4px">오른쪽(설교단쪽) → 왼쪽 순, 현직 감독 중 취임 오래된 순</div>
+        <div><strong>채성기(17대) → 최현규(15대) → 도준순(14대) → 임영훈(10대?) → 한정석(9대?) → 유병용(18대·현 의장)</strong></div>
+        <div style="font-size:11px;margin-top:4px;color:var(--text3)">⚠️ 김충식 감독 불참 / 정확한 대수 현장 재확인 필요</div>
+      </div>
+    </div>
+
+    <div class="sub-title">🪑 강대상 의자 8개 배치</div>
+    <div class="alert blue">
+      <span class="alert-icon">📌</span>
+      <span>설교단 기준 — 십자가 왼쪽(안쪽→바깥) 현직감독 오래된 순 4자리 / 십자가 오른쪽(안쪽→바깥) 높은순 4자리</span>
+    </div>
+
+    <!-- 배치도 시각화 -->
+    <div style="margin:10px 0;background:var(--surface2);border-radius:10px;padding:12px;border:1px solid var(--border)">
+
+      <!-- 강대상/설교단 -->
+      <div style="text-align:center;margin-bottom:8px">
+        <span style="font-size:11px;color:var(--text3)">← 회중석 방향 →</span>
+      </div>
+
+      <!-- 십자가 -->
+      <div style="text-align:center;margin-bottom:10px">
+        <span style="font-size:22px">✝️</span>
+        <div style="font-size:10px;color:var(--text3)">설교단 (강대상)</div>
+      </div>
+
+      <!-- 의자 배치 -->
+      <div style="display:flex;justify-content:center;align-items:flex-start;gap:6px;flex-wrap:nowrap">
+
+        <!-- 십자가 왼쪽: 현직감독 오래된순 (안쪽→바깥) -->
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--teal);font-weight:700;margin-bottom:2px">← 바깥</div>
+          <div style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.4);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--teal)">④</div>
+            <div style="font-size:10px;color:var(--text2)">도준순</div>
+            <div style="font-size:9px;color:var(--text3)">14대</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--teal);font-weight:700;margin-bottom:2px">&nbsp;</div>
+          <div style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.4);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--teal)">③</div>
+            <div style="font-size:10px;color:var(--text2)">임영훈</div>
+            <div style="font-size:9px;color:var(--text3)">10대</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--teal);font-weight:700;margin-bottom:2px">&nbsp;</div>
+          <div style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.4);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--teal)">②</div>
+            <div style="font-size:10px;color:var(--text2)">한정석</div>
+            <div style="font-size:9px;color:var(--text3)">9대</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--teal);font-weight:700;margin-bottom:2px">안쪽 →</div>
+          <div style="background:rgba(45,212,191,0.15);border:1px solid rgba(45,212,191,0.6);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--teal)">①</div>
+            <div style="font-size:10px;color:var(--text2)">유병용</div>
+            <div style="font-size:9px;color:var(--text3)">18대(현)</div>
+          </div>
+        </div>
+
+        <!-- 십자가 표시 -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:6px">
+          <div style="font-size:18px">✝️</div>
+        </div>
+
+        <!-- 십자가 오른쪽: 채성기 → 임사자 2명 (의자 3개) -->
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--accent);font-weight:700;margin-bottom:2px">← 안쪽</div>
+          <div style="background:rgba(79,124,255,0.15);border:1px solid rgba(79,124,255,0.6);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--accent)">⑤</div>
+            <div style="font-size:10px;color:var(--text2)">채성기</div>
+            <div style="font-size:9px;color:var(--text3)">17대</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px">&nbsp;</div>
+          <div style="background:rgba(240,180,41,0.1);border:1px dashed rgba(240,180,41,0.5);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--gold)">⑥</div>
+            <div style="font-size:10px;color:var(--text2)">이연덕</div>
+            <div style="font-size:9px;color:var(--text3)">임사자·장로</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:center">
+          <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:2px">바깥 →</div>
+          <div style="background:rgba(240,180,41,0.1);border:1px dashed rgba(240,180,41,0.5);border-radius:6px;padding:6px 8px;text-align:center;min-width:62px">
+            <div style="font-size:11px;font-weight:700;color:var(--gold)">⑦</div>
+            <div style="font-size:10px;color:var(--text2)">이옥진</div>
+            <div style="font-size:9px;color:var(--text3)">임사자·장로</div>
+          </div>
+        </div>
+
+      </div><!-- /의자 배치 -->
+
+      <div style="display:flex;justify-content:center;gap:12px;margin-top:10px;flex-wrap:wrap">
+        <span style="font-size:10px;color:var(--teal)">■ 왼쪽: 현직감독 오래된순 4석</span>
+        <span style="font-size:10px;color:var(--accent)">■ 오른쪽: 채성기감독 1석</span>
+        <span style="font-size:10px;color:var(--gold)">■ 임사자(장로) 2석</span>
+      </div>
+      <div style="text-align:center;margin-top:6px">
+        <span style="font-size:10px;color:var(--red)">⚠️ 총 의자 7개 (김충식 감독 불참) · 유병용 감독은 설교단(의장석)</span>
+      </div>
+    </div>
+    <table class="info-table">
+      <tr><th>대수</th><th>감독</th><th>비고</th></tr>
+      <tr><td>8대</td><td>김충식 목사</td><td>⚠️ 이번 불참</td></tr>
+      <tr><td>9대</td><td>한정석 목사</td><td></td></tr>
+      <tr><td>10대</td><td>임영훈 목사</td><td></td></tr>
+      <tr><td>14대</td><td>도준순 목사</td><td>서울세광교회</td></tr>
+      <tr><td>15대</td><td>최현규 목사</td><td>목동교회</td></tr>
+      <tr><td>17대</td><td>채성기 목사</td><td>오류동교회</td></tr>
+      <tr><td>18대</td><td>유병용 감독</td><td>현직 의장</td></tr>
+    </table>
+    <div class="alert gold">
+      <span class="alert-icon">⚠️</span>
+      <span>11~13대, 16대 대수는 검색으로 미확인 — 현장 확인 또는 연회 자료 참조 필요</span>
+    </div>
+    <div class="sub-title">성찬 분급 동선 — 매뉴얼 p.9 기준</div>
+
+    <!-- 성찬 분급 배치 시각화 -->
+    <div style="background:var(--surface2);border-radius:10px;padding:12px;border:1px solid var(--border);margin:8px 0;">
+      <div style="text-align:center;font-size:10px;color:var(--text3);margin-bottom:8px;">← 십자가 바라보는 방향 기준 →</div>
+
+      <!-- 강단/성찬상 -->
+      <div style="display:flex;justify-content:center;margin-bottom:8px;">
+        <div style="background:rgba(79,124,255,0.15);border:1px solid rgba(79,124,255,0.4);border-radius:8px;padding:6px 24px;text-align:center;">
+          <div style="font-size:11px;font-weight:700;color:var(--accent)">✝️ 강단 · 성찬상</div>
+          <div style="font-size:9px;color:var(--text3)">유병용 감독 (집례)</div>
+        </div>
+      </div>
+
+      <!-- 이동 화살표 -->
+      <div style="display:flex;justify-content:center;gap:40px;margin-bottom:6px;">
+        <div style="font-size:18px;color:var(--teal)">↙</div>
+        <div style="font-size:18px;color:var(--accent)">↘</div>
+      </div>
+
+      <!-- 좌우 감독 조 -->
+      <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <div style="flex:1;background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.3);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--teal)">왼쪽 조</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">유병용 + 도준순</div>
+          <div style="font-size:9px;color:var(--text3)">왼쪽 끝 → 중앙</div>
+          <div style="font-size:9px;color:var(--teal);margin-top:4px;">⬅ B·H 감리사까지</div>
+        </div>
+        <div style="flex:1;background:rgba(79,124,255,0.1);border:1px solid rgba(79,124,255,0.3);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--accent)">오른쪽 조</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">최현규 + 채성기</div>
+          <div style="font-size:9px;color:var(--text3)">오른쪽 끝 → 중앙</div>
+          <div style="font-size:9px;color:var(--accent);margin-top:4px;">H·C 감리사까지 ➡</div>
+        </div>
+      </div>
+
+      <!-- 작은 테이블 / 스텝 -->
+      <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <div style="flex:1;background:rgba(240,180,41,0.08);border:1px dashed rgba(240,180,41,0.4);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--gold)">왼쪽 작은 테이블</div>
+          <div style="font-size:9px;color:var(--text2);margin-top:3px;">떡그릇·성찬기 세팅</div>
+          <div style="font-size:9px;color:var(--gold);margin-top:3px;">김용현 목사<br>전남욱 목사</div>
+          <div style="font-size:8px;color:var(--text3);margin-top:2px;">감독→감리사 전달 보조</div>
+        </div>
+        <div style="flex:1;background:rgba(248,113,113,0.08);border:1px dashed rgba(248,113,113,0.4);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--red)">오른쪽 작은 테이블</div>
+          <div style="font-size:9px;color:var(--text2);margin-top:3px;">떡그릇·성찬기 세팅</div>
+          <div style="font-size:9px;color:var(--red);margin-top:3px;">이준구 목사<br>이준영 전도사</div>
+          <div style="font-size:8px;color:var(--text3);margin-top:2px;">감독→감리사 전달 보조</div>
+        </div>
+      </div>
+
+      <!-- 감리사 분급 라인 -->
+      <div style="background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.3);border-radius:8px;padding:8px;text-align:center;">
+        <div style="font-size:10px;font-weight:700;color:var(--green)">감리사 분급 라인 (9p 이미지 참고)</div>
+        <div style="font-size:9px;color:var(--text2);margin-top:3px;">F·A·G·B·H·C·D·I·E 순 (왼쪽→오른쪽)</div>
+        <div style="font-size:9px;color:var(--text3);margin-top:2px;">분급 받은 감리사 → 자신의 지방 위치로 이동 → 회원 성찬</div>
+      </div>
+    </div>
+
+    <div class="sub-title">성찬 분급 절차</div>
     <div class="flow">
-      <div class="flow-item"><div class="flow-dot active">1</div><div class="flow-content"><div class="flow-title">주기도문 완료 후 분병·분잔 시작</div><div class="flow-desc">집례: 최현규 감독</div></div></div>
-      <div class="flow-item"><div class="flow-dot active">2</div><div class="flow-content"><div class="flow-title">성찬보좌 6명 먼저 분급</div><div class="flow-desc">김충식·한정석·임영훈·도준순·최현규·채성기 감독</div></div></div>
-      <div class="flow-item"><div class="flow-dot active">3</div><div class="flow-content"><div class="flow-title">감독 → 감리사석 분급</div><div class="flow-desc">유병용+도준순 / 최현규+채성기 감독<br>허규·최순원 위치 기준 좌우 이동</div></div></div>
-      <div class="flow-item"><div class="flow-dot active">4</div><div class="flow-content"><div class="flow-title">스텝 → 감리사에게 나머지 떡·잔 전달</div></div></div>
-      <div class="flow-item"><div class="flow-dot active">5</div><div class="flow-content"><div class="flow-title">감리사 → 각 지방 회중석 분급</div></div></div>
-      <div class="flow-item"><div class="flow-dot">6</div><div class="flow-content"><div class="flow-title">완료 감리사 → 성찬그릇 강단 반납 후 착석</div></div></div>
-      <div class="flow-item"><div class="flow-dot">7</div><div class="flow-content"><div class="flow-title">성찬 후 감사기도</div><div class="flow-desc">채성기 목사</div></div></div>
+      <div class="flow-item"><div class="flow-dot active">1</div><div class="flow-content"><div class="flow-title">주기도문 완료 → 감리사들 앞에 줄 서기</div><div class="flow-desc">9p F·A·G·B·H·C·D·I·E 위치로 도열</div></div></div>
+      <div class="flow-item"><div class="flow-dot active">2</div><div class="flow-content"><div class="flow-title">성찬보좌 5명 먼저 분급</div><div class="flow-desc">한정석·임영훈·도준순·최현규·채성기 감독<br><span style="color:var(--red)">⚠️ 김충식 감독 불참으로 5명</span></div></div></div>
+      <div class="flow-item"><div class="flow-dot active">3</div><div class="flow-content"><div class="flow-title">왼쪽 조 (유병용+도준순): 왼쪽 끝→중앙 이동</div><div class="flow-desc">B·H 위치 감리사 2명에게 떡그릇·성찬기 전달<br>왼쪽 테이블: 김용현·전남욱 목사가 보조</div></div></div>
+      <div class="flow-item"><div class="flow-dot active">4</div><div class="flow-content"><div class="flow-title">오른쪽 조 (최현규+채성기): 오른쪽 끝→중앙 이동</div><div class="flow-desc">H·C 위치 감리사 2명에게 떡그릇·성찬기 전달<br>오른쪽 테이블: 이준구·이준영이 보조</div></div></div>
+      <div class="flow-item"><div class="flow-dot active">5</div><div class="flow-content"><div class="flow-title">떡그릇·성찬기 받은 감리사 → 각 지방 위치 이동</div></div></div>
+      <div class="flow-item"><div class="flow-dot active">6</div><div class="flow-content"><div class="flow-title">전체 회원 성찬 시작</div><div class="flow-desc">⚠️ 연회원 동선: 화면으로 이동 방향 지시 필요<br>완료 후 이동 위치도 화면 안내 준비</div></div></div>
+      <div class="flow-item"><div class="flow-dot">7</div><div class="flow-content"><div class="flow-title">완료 감리사 → 성찬그릇 강단 성찬상 반납 → 착석</div></div></div>
+      <div class="flow-item"><div class="flow-dot">8</div><div class="flow-content"><div class="flow-title">성찬 후 감사기도</div><div class="flow-desc">채성기 목사</div></div></div>
+    </div>
+
+    <div class="alert red">
+      <span class="alert-icon">📺</span>
+      <span><strong>화면 지시 준비 필요:</strong> ① 성찬 받기 위한 연회원 동선 방향 ② 성찬 완료 후 이동 위치 → 방송실에 사전 준비 요청</span>
     </div>
     <div class="sub-title">봉헌</div>
     <div class="text-block">봉헌기도(임예길 감리사) → 봉헌특주(고우석 성도) → 봉헌(광림교회 봉헌위원 수합 → <strong>1층 연회 임시사무실 전달</strong>)</div>
@@ -699,7 +965,7 @@
     <div class="section-icon">📋</div>
     <div class="section-title-wrap">
       <div class="section-title">사무처리 1·2</div>
-      <div class="section-meta">11:35~12:40 / 내빈석: 장의자 B·C열 2줄</div>
+      <div class="section-meta">11:35~12:40 · p.16(사무처리1) · p.19(사무처리2)</div>
     </div>
     <div class="section-right"><div class="section-chevron">▾</div></div>
   </div>
@@ -712,6 +978,20 @@
     <div class="text-block">① 서기·부서기 인사 ② 회원 점명 ③ 회원석 결정(자료 232쪽) ④ 회순 채택(5~7쪽) ⑤ 공천위원회 보고 ⑥ 감독의 말씀</div>
     <div class="sub-title">사무처리 2</div>
     <div class="text-block">① 연회 감사 보고·결산 (김성환 목사, 정응석 장로) ② 연회 총무 보고 ③ 연회 평신도기관장 인준·인사 ④ 광고 4건</div>
+  </div>
+</div>
+
+<!-- ★ 제2차 회집 구분 -->
+<div style="background:linear-gradient(135deg,rgba(248,113,113,0.12),rgba(248,113,113,0.04));border:1px solid rgba(248,113,113,0.35);border-radius:12px;padding:12px 14px;margin:4px 0;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+    <div>
+      <div style="font-size:15px;font-weight:800;color:var(--red);letter-spacing:1px;">제 2 차 회 집</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">4월 9일(목) 오후 2:00 ~ 5:30</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end;">
+      <div style="font-size:10px;background:rgba(248,113,113,0.12);color:var(--red);padding:2px 8px;border-radius:10px;border:1px solid rgba(248,113,113,0.3);">사무처리3 → p.22 / 표창식 → p.22~33</div>
+      <div style="font-size:10px;background:rgba(248,113,113,0.12);color:var(--red);padding:2px 8px;border-radius:10px;border:1px solid rgba(248,113,113,0.3);">사무처리4 → p.36</div>
+    </div>
   </div>
 </div>
 
@@ -730,7 +1010,29 @@
   </div>
   <div class="section-body">
     <div class="sub-title">감리사 보고 순서 (18개 지방회)</div>
-    <div class="text-block">영등포(홍영헌) → 동작(장천기) → 구로(허규) → 금천(전성국) → 강서(김동하) → 강서동(김상인) → 양천(현재국) → 강동(김태인) → 강남(김창오) → 강남동(변기수) → 서초(박동식) → 관악(원종헌) → 관악서(이재용) → 송파(이구영) → 잠실(임예길) → 남태평양(홍동근) → 호주선교(양현식) → 미주(지성은)</div>
+    <div class="text-block">영등포(홍영헌) → 동작(장천기) → 구로(허규) → 금천(전성국) → 강서(김동하) → 강서동(김상인) → 양천(현재국) → 강동(김태인) → 강남(김창오) → 강남동(변기수) → 서초(박동식) → 관악(원종헌) → 관악서(이재용) → 송파(이구영) → 잠실(임예길) → 남태평양(홍동근) → <span class="highlight red">호주선교(최순원 목사 대타 — 양현식 감리사 부재)</span> → 미주(지성은)</div>
+
+    <div class="sub-title">💐 꽃다발 준비자 성가대석 배치</div>
+    <div style="background:var(--surface2);border-radius:10px;padding:10px;border:1px solid var(--border);margin:6px 0;">
+      <div style="text-align:center;font-size:10px;color:var(--text3);margin-bottom:8px;">본당 왼쪽 성가대석 — 이름표 부착 후 순서대로 착석</div>
+      <div style="display:flex;gap:6px;margin-bottom:6px;">
+        <div style="flex:1;background:rgba(240,180,41,0.1);border:1px solid rgba(240,180,41,0.4);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--gold)">성가대석 첫 줄</div>
+          <div style="font-size:9px;color:var(--text2);margin-top:3px;">공로패 대상자 꽃다발</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:2px;">순서대로 이름표 부착</div>
+        </div>
+        <div style="flex:1;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.3);border-radius:8px;padding:8px;text-align:center;">
+          <div style="font-size:10px;font-weight:700;color:var(--green)">성가대석 둘째 줄</div>
+          <div style="font-size:9px;color:var(--text2);margin-top:3px;">표창패 대상자 꽃다발</div>
+          <div style="font-size:9px;color:var(--text3);margin-top:2px;">순서대로 이름표 부착</div>
+        </div>
+      </div>
+      <div style="background:rgba(79,124,255,0.08);border:1px solid rgba(79,124,255,0.2);border-radius:6px;padding:8px;font-size:10px;color:var(--text2);line-height:1.7;">
+        📋 <strong>진행 순서:</strong><br>
+        호명 → 수여자 앞으로 나옴 → <strong>가운데 계단으로 올라감</strong><br>
+        → 꽃다발 준비자 성가대석에서 나와 전달 → 감독과 사진 촬영 → 복귀
+      </div>
+    </div>
 
     <div class="sub-title">표창식 스텝 역할</div>
     <div class="text-block">위치: <strong>강대 왼쪽 / 성가대석 오른쪽 공간</strong></div>
@@ -777,13 +1079,28 @@
   <div class="day-divider-line"></div>
 </div>
 
+<!-- ★ 제3차 회집 구분 -->
+<div style="background:linear-gradient(135deg,rgba(240,180,41,0.12),rgba(240,180,41,0.04));border:1px solid rgba(240,180,41,0.4);border-radius:12px;padding:12px 14px;margin:4px 0;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+    <div>
+      <div style="font-size:15px;font-weight:800;color:var(--gold);letter-spacing:1px;">제 3 차 회 집</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">4월 10일(금) 오전 9:30 ~ 오후 4:00</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px;align-items:flex-end;">
+      <div style="font-size:10px;background:rgba(240,180,41,0.12);color:var(--gold);padding:2px 8px;border-radius:10px;border:1px solid rgba(240,180,41,0.3);">아침기도회 → p.38</div>
+      <div style="font-size:10px;background:rgba(240,180,41,0.12);color:var(--gold);padding:2px 8px;border-radius:10px;border:1px solid rgba(240,180,41,0.3);">은퇴찬하 → p.40 / 사무처리5 → p.48</div>
+      <div style="font-size:10px;background:rgba(240,180,41,0.12);color:var(--gold);padding:2px 8px;border-radius:10px;border:1px solid rgba(240,180,41,0.3);">준회원허입 → p.50 / 목사안수 → p.56</div>
+    </div>
+  </div>
+</div>
+
 <!-- 아침기도회 -->
 <div id="morning" class="section success" onclick="toggle(this)">
   <div class="section-header">
     <div class="section-icon">🌅</div>
     <div class="section-title-wrap">
       <div class="section-title">아침기도회</div>
-      <div class="section-meta">09:30~10:10</div>
+      <div class="section-meta">09:30~10:10 · 매뉴얼 p.38</div>
     </div>
     <div class="section-right">
       <span class="check-badge" id="badge-morning">0/0</span>
@@ -810,7 +1127,7 @@
     <div class="section-icon">⚙️</div>
     <div class="section-title-wrap">
       <div class="section-title">은퇴찬하예배 세팅</div>
-      <div class="section-meta">10:10~10:30 · 반드시 완료</div>
+      <div class="section-meta">10:10~10:30 · 매뉴얼 p.40 · 반드시 완료</div>
     </div>
     <div class="section-right">
       <span class="check-badge warn" id="badge-retire-prep">0/0</span>
@@ -843,7 +1160,7 @@
     <div class="section-icon">🎖️</div>
     <div class="section-title-wrap">
       <div class="section-title">은퇴찬하예배</div>
-      <div class="section-meta">10:30~11:40 · 사회: 허규 감리사</div>
+      <div class="section-meta">10:30~11:40 · 매뉴얼 p.40~46 · 사회: 허규 감리사</div>
     </div>
     <div class="section-right"><div class="section-chevron">▾</div></div>
   </div>
@@ -918,7 +1235,7 @@
     <div class="section-icon">⚙️</div>
     <div class="section-title-wrap">
       <div class="section-title">목사안수예배 세팅</div>
-      <div class="section-meta">14:00~14:30 · 반드시 완료</div>
+      <div class="section-meta">14:00~14:30 · 매뉴얼 p.56 · 반드시 완료</div>
     </div>
     <div class="section-right">
       <span class="check-badge warn" id="badge-ord-prep">0/0</span>
@@ -949,7 +1266,7 @@
     <div class="section-icon">✝️</div>
     <div class="section-title-wrap">
       <div class="section-title">목사안수예배 및 정회원 허입</div>
-      <div class="section-meta">14:30~16:00 · 하이라이트</div>
+      <div class="section-meta">14:30~16:00 · 매뉴얼 p.56~65 · 하이라이트</div>
     </div>
     <div class="section-right"><div class="section-chevron">▾</div></div>
   </div>
@@ -1054,6 +1371,7 @@ function updateProgress() {
   updateBadge('badge-retire-prep', 'cl-retire-prep');
   updateBadge('badge-ord-prep', 'cl-ord-prep');
   updateBadge('badge-final', 'cl-final');
+  updateBadge('badge-env', 'cl-env');
 }
 
 function updateBadge(badgeId, listId) {
